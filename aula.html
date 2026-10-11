@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula — Introducción a Claude Code 2026</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/plataforma.css">
+<style>
+  [hidden] { display: none !important; }
+  /* ---------- barra ---------- */
+  .barra { border-bottom: 1px solid var(--linea); background: rgba(249,246,238,.95); position: sticky; top: 0; z-index: 20; backdrop-filter: blur(8px); }
+  .barra .in { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; padding: 0 24px; }
+  .barra .der { display: flex; align-items: center; gap: 18px; font-size: 14px; color: var(--tinta-2); }
+  .barra .hola b { color: var(--tinta); font-weight: 500; }
+  .barra .btn { padding: 8px 14px; font-size: 13px; }
+  .barra .salir { background: none; border: 0; font: inherit; color: var(--tinta-2); text-decoration: underline; cursor: pointer; }
+
+  /* ---------- estructura ---------- */
+  .aula { display: grid; grid-template-columns: 340px 1fr; min-height: calc(100vh - 60px); }
+  .temario { border-right: 1px solid var(--linea); background: var(--papel); max-height: calc(100vh - 60px); position: sticky; top: 60px; overflow-y: auto; }
+  .avance { padding: 22px 22px 18px; border-bottom: 1px solid var(--linea); }
+  .avance .cifra { font-family: var(--serif); font-weight: 800; color: var(--acento); font-size: 30px; line-height: 1; margin: 8px 0 10px; }
+  .avance .cifra small { font-size: 15px; color: var(--gris); font-family: var(--sans); }
+  .barra-avance { height: 5px; border-radius: 5px; overflow: hidden; background: var(--linea); }
+  .barra-avance i { display: block; height: 100%; background: var(--acento); width: 0; transition: width .6s; }
+  .modulo { border-bottom: 1px solid var(--linea); }
+  .modulo > summary { list-style: none; cursor: pointer; padding: 14px 22px; display: grid; grid-template-columns: 38px 1fr auto; gap: 6px; align-items: baseline; }
+  .modulo > summary::-webkit-details-marker { display: none; }
+  .modulo .m { font: 600 12px var(--mono); color: var(--acento-texto); }
+  .modulo .t { font-family: var(--serif); font-weight: 600; font-size: 15.5px; line-height: 1.3; }
+  .modulo .c { font: 11.5px var(--mono); color: var(--gris); }
+  .modulo ul { list-style: none; padding: 0 0 10px; }
+  .leccion { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: start; width: 100%; text-align: left; background: none; border: 0; padding: 8px 22px 8px 26px; font: 14px/1.4 var(--sans); color: var(--tinta-2); cursor: pointer; }
+  .leccion:hover { background: var(--papel-2); }
+  .leccion[aria-current="true"] { background: var(--acento-suave); color: var(--tinta); box-shadow: inset 3px 0 0 var(--acento); }
+  .leccion .ico { width: 16px; height: 16px; margin-top: 2px; border: 1.5px solid var(--linea); border-radius: 50%; display: grid; place-items: center; font-size: 10px; color: var(--papel); }
+  .leccion.hecha .ico { background: var(--ok); border-color: var(--ok); }
+  .leccion.pronto { color: var(--gris); }
+  .leccion.pronto .ico { border-style: dashed; }
+  .leccion .min { font: 11.5px var(--mono); color: var(--gris); padding-top: 2px; }
+
+  /* ---------- lección ---------- */
+  .contenido { padding: 34px 44px 60px; max-width: 1080px; width: 100%; }
+  .contenido h1 { font-size: clamp(26px, 3vw, 38px); line-height: 1.08; margin: 10px 0 24px; }
+  .video { position: relative; aspect-ratio: 16 / 9; background: var(--noche); overflow: hidden; border-radius: 12px; box-shadow: 0 14px 34px rgba(40,38,34,.25); }
+  .video video { width: 100%; height: 100%; display: block; background: #000; }
+  .marca-agua { position: absolute; font: 12px var(--mono); color: rgba(255,255,255,.2); pointer-events: none; user-select: none; transition: top 1.5s, left 1.5s; white-space: nowrap; }
+  .capa { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: #fff; background: linear-gradient(135deg, #3b3833, #5d5b55); }
+  .capa h2 { font-size: clamp(22px, 2.6vw, 32px); margin: 10px 0 8px; }
+  .capa p { color: rgba(255,255,255,.72); max-width: 30em; margin: 0 auto 18px; font-size: 15px; }
+  .capa .etiqueta { color: var(--acento-suave); }
+  .capa .btn { background: #fff; color: var(--acento); border-color: #fff; }
+  .controles { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,.08); }
+  .velocidad { display: flex; gap: 4px; align-items: center; font: 12px var(--mono); color: var(--gris); }
+  .velocidad button { font: 12px var(--mono); padding: 6px 9px; border-radius: 6px; background: var(--papel); border: 1px solid var(--linea); cursor: pointer; color: var(--tinta-2); }
+  .velocidad button[aria-pressed="true"] { background: var(--acento); color: #fff; border-color: var(--acento); }
+  .navega { display: flex; gap: 10px; }
+  .navega .btn { padding: 11px 16px; font-size: 14px; }
+  .tarea { margin-top: 28px; background: var(--papel); border-radius: 12px; box-shadow: var(--sombra); border-left: 4px solid var(--acento); padding: 16px 20px; }
+  .tarea p { font-size: 16.5px; line-height: 1.5; margin-top: 6px; color: var(--tinta-2); }
+  .pie { margin-top: 40px; font-size: 13px; color: var(--gris); }
+
+  /* ---------- pantallas completas ---------- */
+  .pantalla { min-height: calc(100vh - 60px); display: grid; place-items: center; padding: 40px 16px; text-align: center; }
+  .pantalla .caja { max-width: 540px; background: var(--papel); border-radius: 16px; box-shadow: var(--sombra); padding: 36px 32px; }
+  .pantalla h1 { font-size: clamp(32px, 4vw, 48px); line-height: 1.05; margin: 14px 0 14px; }
+  .pantalla p { color: var(--tinta-2); margin-bottom: 26px; }
+
+  /* ---------- celular ---------- */
+  .abrir-temario { display: none; }
+  @media (max-width: 900px) {
+    .aula { grid-template-columns: 1fr; }
+    .temario { position: fixed; inset: 60px 0 0 0; max-height: none; z-index: 15; transform: translateX(-100%); transition: transform .3s; border-right: 0; }
+    .temario.abierto { transform: none; }
+    .abrir-temario { display: inline-flex; background: var(--chip); border: 0; border-radius: 8px; padding: 8px 12px; font: 600 13px var(--sans); cursor: pointer; }
+    .contenido { padding: 22px 16px 48px; }
+    .barra .in { padding: 0 16px; }
+    .barra .hola, .barra .marca { display: none; }
+    .controles { flex-direction: column; align-items: stretch; }
+    .navega .btn { flex: 1; }
+    .capa { padding: 14px; }
+    .capa h2 { font-size: 18px; margin: 4px 0; }
+    .capa p { font-size: 13px; margin-bottom: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="demo-aviso" id="demo" hidden>MODO DEMO · datos de ejemplo · falta configurar js/config.js</div>
+<header class="barra">
+  <div class="in">
+    <button class="abrir-temario" id="abrir-temario" aria-controls="temario" aria-expanded="false">☰ Temario</button>
+    <a class="marca" href="index.html"><span class="logo" aria-hidden="true">CC</span>Claude Code</a>
+    <div class="der">
+      <span class="hola" id="hola"></span>
+      <button class="btn btn-claro" id="btn-pdf" type="button">PDF del curso</button>
+      <button class="salir" id="salir" type="button">Salir</button>
+    </div>
+  </div>
+</header>
+
+<div class="pantalla" id="cargando"><p class="etiqueta">Cargando tu aula…</p></div>
+
+<div class="pantalla" id="vencido" hidden>
+  <div class="caja">
+    <p class="etiqueta"><b>Acceso vencido</b></p>
+    <h1>Tu año de acceso terminó</h1>
+    <p id="vencido-texto">Gracias por estudiar con nosotros. Si quieres volver a ver el curso, puedes renovar tu acceso por un año más.</p>
+    <a class="btn" href="index.html#precio">Renovar acceso <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+<div class="aula" id="aula" hidden>
+  <aside class="temario" id="temario">
+    <div class="avance">
+      <p class="etiqueta">Tu avance</p>
+      <p class="cifra"><span id="pct">0%</span> <small id="avance-texto"></small></p>
+      <div class="barra-avance"><i id="barra"></i></div>
+    </div>
+    <nav id="lista" aria-label="Temario del curso"></nav>
+  </aside>
+
+  <main class="contenido">
+    <p class="etiqueta" id="l-modulo"></p>
+    <h1 id="l-titulo"></h1>
+    <div class="video" id="caja-video">
+      <video id="video" controls playsinline controlslist="nodownload" disablepictureinpicture preload="metadata"></video>
+      <span class="marca-agua" id="marca-agua"></span>
+      <div class="capa" id="capa" hidden></div>
+    </div>
+    <div class="controles">
+      <div class="velocidad" role="group" aria-label="Velocidad">
+        Velocidad
+        <button type="button" data-v="1" aria-pressed="true">1x</button>
+        <button type="button" data-v="1.25" aria-pressed="false">1.25x</button>
+        <button type="button" data-v="1.5" aria-pressed="false">1.5x</button>
+        <button type="button" data-v="2" aria-pressed="false">2x</button>
+      </div>
+      <div class="navega">
+        <button class="btn btn-claro" id="anterior" type="button">← Anterior</button>
+        <button class="btn" id="siguiente" type="button">Marcar como vista y seguir <span aria-hidden="true">→</span></button>
+      </div>
+    </div>
+    <div class="tarea" id="tarea" hidden><p class="etiqueta"><b>Tarea</b> de esta lección</p><p id="tarea-texto"></p></div>
+    <p class="pie">Acceso personal: tu cuenta no se comparte. Si entras desde otro dispositivo, aquí se cierra la sesión. · Curso independiente, sin afiliación con Anthropic.</p>
+  </main>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/temario.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.15/dist/hls.min.js"></script>
+<script src="js/cliente.js"></script>
+<script src="js/aula.js"></script>
+</body>
+</html>

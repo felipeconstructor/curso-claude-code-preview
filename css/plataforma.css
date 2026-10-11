@@ -1,0 +1,66 @@
+/* Estilos compartidos de entrar.html y aula.html (mismos tokens que la landing) */
+:root {
+  --fondo: #dcd1bf;        /* beige pastel de la página */
+  --papel: #f9f6ee;        /* crema de las tarjetas */
+  --papel-2: #f1ece1;
+  --chip: #e9e5da;
+  --tinta: #1f1f1f;
+  --tinta-2: #3c3c3b;
+  --gris: #6f6d66;
+  --linea: #e3ddcf;
+  --acento: #1e5b8c;       /* azul de los botones */
+  --acento-hover: #174a73;
+  --acento-suave: #c9d6de;
+  --acento-texto: #2d6a9a;
+  --plomo: #888777;
+  --noche: #3b3833;        /* plomo oscuro */
+  --ok: #1e5b8c;
+  --error: #9a3412;
+  --serif: "Plus Jakarta Sans", system-ui, sans-serif;   /* títulos */
+  --sans: "Inter", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --sombra: 0 1px 2px rgba(0,0,0,.05), 0 8px 24px rgba(60,50,30,.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--fondo); color: var(--tinta);
+  font-family: var(--sans); font-size: 16px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 700; letter-spacing: -.01em; }
+.etiqueta { font: 600 12px var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gris); }
+.etiqueta b { color: var(--acento-texto); font-weight: 700; }
+
+.marca { text-decoration: none; font-family: var(--serif); font-weight: 700; font-size: 20px; line-height: 1; color: #4a4844; display: inline-flex; align-items: center; gap: 10px; }
+.marca .logo { width: 32px; height: 32px; border-radius: 9px; background: var(--acento); color: #fff; display: grid; place-items: center; font: 800 14px var(--serif); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--acento); color: #fff;
+  font: 600 14.5px var(--sans); padding: 12px 20px;
+  border: 1px solid var(--acento); border-radius: 8px; cursor: pointer; text-decoration: none;
+  box-shadow: 0 2px 4px rgba(30,91,140,.25);
+  transition: background .2s, border-color .2s, color .2s;
+}
+.btn:hover { background: var(--acento-hover); border-color: var(--acento-hover); }
+.btn:disabled { opacity: .55; cursor: wait; }
+.btn-claro { background: var(--chip); color: var(--tinta); border-color: var(--chip); box-shadow: none; }
+.btn-claro:hover { background: #ddd8ca; border-color: #ddd8ca; color: var(--tinta); }
+.btn:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+.campo { display: grid; gap: 6px; margin-bottom: 16px; }
+.campo label { font-size: 14px; font-weight: 500; color: var(--tinta-2); }
+.campo input {
+  font: 16px var(--sans); padding: 12px 13px; background: #fff;
+  border: 1px solid #d8d1c1; border-radius: 8px; color: var(--tinta);
+}
+.campo input:focus { border-color: var(--acento); outline: 2px solid var(--acento-suave); outline-offset: 0; }
+.mensaje { font-size: 14px; min-height: 22px; margin: 4px 0 12px; }
+.mensaje.error { color: var(--error); }
+.mensaje.ok { color: var(--acento-texto); }
+
+.demo-aviso {
+  background: var(--noche); color: #f1ede4; font: 12px var(--mono);
+  letter-spacing: .06em; text-align: center; padding: 8px 16px;
+}

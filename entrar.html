@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entrar — Introducción a Claude Code 2026</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/plataforma.css">
+<style>
+  .pagina { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 24px; }
+  .lado {
+    position: relative; overflow: hidden; border-radius: 16px; color: #fff; padding: 36px 40px;
+    background: linear-gradient(180deg, #b7ae9f 0%, #827b70 45%, #3b3833 100%);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .lado::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .14; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .lado > * { position: relative; z-index: 1; }
+  .lado .marca { color: #fff; }
+  .lado blockquote { font-family: var(--serif); font-weight: 700; font-size: clamp(28px, 3vw, 40px); line-height: 1.12; max-width: 13em; text-shadow: 0 2px 8px rgba(0,0,0,.25); }
+  .lado blockquote em { font-style: normal; color: var(--acento-suave); }
+  .lado .etiqueta { color: rgba(255,255,255,.75); }
+  .formulario { display: flex; align-items: center; justify-content: center; padding: 24px 0; }
+  .caja { width: 100%; max-width: 420px; background: var(--papel); border-radius: 16px; box-shadow: var(--sombra); padding: 34px 32px 30px; }
+  .caja h1 { font-size: 32px; line-height: 1.1; margin: 12px 0 8px; }
+  .caja .bajada { color: var(--tinta-2); margin-bottom: 28px; }
+  .caja .btn { width: 100%; margin-top: 4px; }
+  .enlaces { display: flex; justify-content: space-between; font-size: 14px; margin-top: 20px; color: var(--tinta-2); }
+  .enlaces button { background: none; border: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer; }
+  .aviso-compra { border-left: 3px solid var(--acento); border-radius: 0 8px 8px 0; background: var(--acento-suave); padding: 12px 14px; font-size: 14.5px; margin-bottom: 24px; }
+  [hidden] { display: none !important; }
+  @media (max-width: 820px) {
+    .pagina { grid-template-columns: 1fr; grid-template-rows: auto 1fr; padding: 12px; gap: 12px; }
+    .lado { padding: 18px 18px; flex-direction: row; align-items: center; }
+    .lado blockquote, .lado .etiqueta { display: none; }
+    .formulario { padding: 8px 0 24px; align-items: flex-start; }
+    .caja { padding: 26px 20px 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="demo-aviso" id="demo" hidden>MODO DEMO · falta configurar js/config.js · cualquier correo y contraseña entran</div>
+<div class="pagina">
+  <aside class="lado">
+    <a class="marca" href="index.html"><span class="logo" aria-hidden="true">CC</span>Claude Code</a>
+    <blockquote>La IA ya sabe hacer casi todo. <em>Lo que falta es quien sepa dirigirla.</em></blockquote>
+    <p class="etiqueta">Introducción a Claude Code 2026 · Felipe Campos</p>
+  </aside>
+
+  <main class="formulario">
+    <div class="caja">
+      <div class="aviso-compra" id="aviso-compra" hidden></div>
+
+      <!-- Entrar -->
+      <form id="f-entrar" novalidate>
+        <p class="etiqueta"><b>Aula</b> · acceso alumnos</p>
+        <h1>Entrar al curso</h1>
+        <p class="bajada">Con el correo que usaste al comprar.</p>
+        <div class="campo"><label for="e-email">Correo</label><input id="e-email" type="email" autocomplete="email" required></div>
+        <div class="campo"><label for="e-clave">Contraseña</label><input id="e-clave" type="password" autocomplete="current-password" required></div>
+        <p class="mensaje" id="m-entrar" role="alert"></p>
+        <button class="btn" type="submit">Entrar <span aria-hidden="true">→</span></button>
+        <div class="enlaces"><button type="button" data-ir="olvido">Olvidé mi contraseña</button><a href="index.html#precio">¿No tienes acceso?</a></div>
+      </form>
+
+      <!-- Olvidé mi contraseña -->
+      <form id="f-olvido" novalidate hidden>
+        <p class="etiqueta"><b>Aula</b> · recuperar acceso</p>
+        <h1>Recupera tu contraseña</h1>
+        <p class="bajada">Te enviamos un enlace para crear una nueva.</p>
+        <div class="campo"><label for="o-email">Correo</label><input id="o-email" type="email" autocomplete="email" required></div>
+        <p class="mensaje" id="m-olvido" role="alert"></p>
+        <button class="btn" type="submit">Enviar enlace</button>
+        <div class="enlaces"><button type="button" data-ir="entrar">← Volver</button></div>
+      </form>
+
+      <!-- Crear contraseña (desde el correo de bienvenida o de recuperación) -->
+      <form id="f-crear" novalidate hidden>
+        <p class="etiqueta"><b>Bienvenido</b> · último paso</p>
+        <h1>Crea tu contraseña</h1>
+        <p class="bajada">Mínimo 10 caracteres. La usarás cada vez que entres.</p>
+        <div class="campo"><label for="c-clave">Contraseña nueva</label><input id="c-clave" type="password" autocomplete="new-password" minlength="10" required></div>
+        <div class="campo"><label for="c-clave2">Repite la contraseña</label><input id="c-clave2" type="password" autocomplete="new-password" minlength="10" required></div>
+        <p class="mensaje" id="m-crear" role="alert"></p>
+        <button class="btn" type="submit">Guardar y entrar <span aria-hidden="true">→</span></button>
+      </form>
+    </div>
+  </main>
+</div>
+
+<script src="js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/cliente.js"></script>
+<script>
+(async function () {
+  const { sb, registrarSesion } = window.CursoCliente;
+  const DEMO = window.CURSO.DEMO;
+  const $ = (id) => document.getElementById(id);
+  const params = new URLSearchParams(location.search);
+  const formularios = { entrar: $("f-entrar"), olvido: $("f-olvido"), crear: $("f-crear") };
+
+  function mostrar(nombre) {
+    Object.entries(formularios).forEach(([k, f]) => (f.hidden = k !== nombre));
+    const primero = formularios[nombre].querySelector("input");
+    if (primero) primero.focus();
+  }
+  function mensaje(id, texto, tipo = "error") { const m = $(id); m.textContent = texto; m.className = `mensaje ${tipo}`; }
+  document.querySelectorAll("[data-ir]").forEach((b) => b.addEventListener("click", () => mostrar(b.dataset.ir)));
+
+  if (DEMO) $("demo").hidden = false;
+
+  const compra = params.get("compra");
+  if (compra === "ok") { $("aviso-compra").hidden = false; $("aviso-compra").textContent = "¡Pago recibido! En unos minutos te llega un correo para crear tu contraseña. Revisa también la carpeta de spam."; }
+  if (compra === "pendiente") { $("aviso-compra").hidden = false; $("aviso-compra").textContent = "Tu pago está pendiente. Cuando MercadoPago lo apruebe te llega el correo de acceso."; }
+
+  // Llegó desde el correo de bienvenida o de recuperación
+  if (params.get("crear") === "1") {
+    if (DEMO) { mostrar("crear"); }
+    else {
+      const { data } = await sb.auth.getSession();
+      if (data.session) mostrar("crear");
+      else { mostrar("olvido"); mensaje("m-olvido", "El enlace ya se usó o venció. Pide uno nuevo aquí."); }
+    }
+  } else if (!DEMO) {
+    const { data } = await sb.auth.getSession();
+    if (data.session) { location.replace("aula.html"); return; }
+  }
+
+  let fallos = 0;
+  formularios.entrar.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const email = $("e-email").value.trim().toLowerCase();
+    const clave = $("e-clave").value;
+    if (!email || !clave) return mensaje("m-entrar", "Escribe tu correo y tu contraseña.");
+    const btn = ev.submitter; btn.disabled = true;
+    if (DEMO) { location.href = "aula.html"; return; }
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: clave });
+    if (error) {
+      fallos++;
+      mensaje("m-entrar", fallos >= 5 ? "Demasiados intentos. Espera un minuto o recupera tu contraseña." : "Correo o contraseña incorrectos.");
+      setTimeout(() => (btn.disabled = false), fallos >= 5 ? 60000 : 800);
+      return;
+    }
+    await registrarSesion(data.user.id);
+    location.href = "aula.html";
+  });
+
+  formularios.olvido.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const email = $("o-email").value.trim().toLowerCase();
+    if (!email) return mensaje("m-olvido", "Escribe tu correo.");
+    ev.submitter.disabled = true;
+    if (!DEMO) {
+      const destino = new URL("entrar.html?crear=1", location.href).href;
+      await sb.auth.resetPasswordForEmail(email, { redirectTo: destino });
+    }
+    // Mismo mensaje exista o no la cuenta: no revelamos qué correos son alumnos.
+    mensaje("m-olvido", "Si ese correo tiene acceso, te llegará un enlace en unos minutos.", "ok");
+  });
+
+  formularios.crear.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const c1 = $("c-clave").value, c2 = $("c-clave2").value;
+    if (c1.length < 10) return mensaje("m-crear", "La contraseña debe tener al menos 10 caracteres.");
+    if (c1 !== c2) return mensaje("m-crear", "Las contraseñas no coinciden.");
+    ev.submitter.disabled = true;
+    if (DEMO) { location.href = "aula.html"; return; }
+    const { data, error } = await sb.auth.updateUser({ password: c1 });
+    if (error) { ev.submitter.disabled = false; return mensaje("m-crear", "No pudimos guardar la contraseña. Pide un enlace nuevo."); }
+    await registrarSesion(data.user.id);
+    location.href = "aula.html";
+  });
+})();
+</script>
+</body>
+</html>

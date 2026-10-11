@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Introducción a Claude Code 2026 — Felipe Campos</title>
+<meta name="description" content="Aprende la habilidad que está cambiando el trabajo: construir sistemas, simplificar tu trabajo, crear contenido y automatizar tu negocio con Claude Code, sin saber programar. Preventa con precio fundador.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fondo: #dcd1bf;        /* beige pastel de la página */
+    --tarjeta: #f9f6ee;      /* crema de las tarjetas */
+    --chip: #e9e5da;
+    --linea: #e3ddcf;
+    --texto: #1f1f1f;
+    --texto-2: #3c3c3b;
+    --gris: #6f6d66;
+    --azul: #1e5b8c;         /* botones */
+    --azul-hover: #174a73;
+    --azul-claro: #c9d6de;
+    --azul-texto: #2d6a9a;
+    --plomo: #888777;
+    --plomo-oscuro: #4a4844;
+    --display: "Plus Jakarta Sans", system-ui, sans-serif;
+    --sans: "Inter", system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sombra: 0 1px 2px rgba(0,0,0,.05), 0 8px 24px rgba(60,50,30,.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--fondo); color: var(--texto); font-family: var(--sans); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; }
+  h1, h2, h3, h4 { font-family: var(--display); letter-spacing: -.01em; }
+  .contenedor { max-width: 1232px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- botones ---------- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--azul); color: #fff; font: 600 14px var(--sans); padding: 10px 18px; border: 1px solid var(--azul); border-radius: 8px; text-decoration: none; cursor: pointer; box-shadow: 0 2px 4px rgba(30,91,140,.25); transition: background .2s, color .2s; }
+  .btn:hover { background: var(--azul-hover); border-color: var(--azul-hover); }
+  .btn:focus-visible, .tab:focus-visible, summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 2px; }
+  .btn-borde { background: transparent; color: var(--azul-texto); border-color: var(--azul-texto); box-shadow: none; }
+  .btn-borde:hover { background: var(--azul-texto); color: #fff; }
+  .btn-plomo { background: var(--chip); color: var(--texto); border-color: var(--chip); box-shadow: none; }
+  .btn-plomo:hover { background: #ddd8ca; border-color: #ddd8ca; }
+  .btn[aria-disabled="true"] { background: var(--chip); border-color: var(--chip); color: var(--gris); box-shadow: none; cursor: default; }
+
+  /* ---------- barra ---------- */
+  .barra .contenedor { max-width: 1440px; padding: 16px 32px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+  .marca { text-decoration: none; font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1; color: var(--plomo-oscuro); display: inline-flex; align-items: center; gap: 10px; }
+  .marca .logo { width: 34px; height: 34px; border-radius: 9px; background: var(--azul); color: #fff; display: grid; place-items: center; font: 800 15px var(--display); }
+  .marca small { display: block; font-size: 12px; font-weight: 600; color: var(--gris); letter-spacing: .02em; margin-top: 3px; }
+  .barra nav.centro { display: flex; gap: 28px; font-size: 15px; font-weight: 500; }
+  .barra nav.centro a { text-decoration: none; }
+  .barra nav.centro a:hover, .barra nav.centro a.activo { text-decoration: underline; text-underline-offset: 4px; }
+  .barra .der { display: flex; gap: 20px; align-items: center; justify-content: flex-end; }
+  .barra .entrar { font-size: 13px; font-weight: 600; text-decoration: none; }
+  .barra .entrar:hover { text-decoration: underline; }
+  .barra .btn { font: 600 14px var(--display); padding: 11px 17px; border-radius: 10px; letter-spacing: .03em; }
+
+  /* ---------- portada ---------- */
+  .portada { margin-top: 24px; border-radius: 0 0 16px 16px; min-height: 280px; padding: 32px; display: flex; flex-direction: column; justify-content: space-between; gap: 60px;
+    background: linear-gradient(180deg, var(--fondo) 0%, #b7ae9f 35%, #827b70 65%, #3b3833 100%); color: #fff; }
+  .volver { align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; background: var(--plomo); color: #f4f1ea; text-decoration: none; font-size: 15px; font-weight: 500; padding: 7px 12px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+  .volver:hover { background: #7a7969; }
+  .portada h1 { font-size: clamp(30px, 4vw, 50px); font-weight: 700; line-height: 1.08; text-shadow: 0 2px 8px rgba(0,0,0,.25); }
+  .insignias { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .insignia { font: 500 13px var(--mono); padding: 5px 13px; border-radius: 999px; background: #f9f6ee; color: var(--texto); }
+  .insignia.codigo { font-size: 15px; font-weight: 700; }
+  .insignia.azul { background: var(--azul-claro); color: var(--azul-texto); }
+
+  /* ---------- planes ---------- */
+  .planes-cab { display: flex; justify-content: space-between; align-items: center; margin: 22px 0 16px; }
+  .rotulo { font: 600 14px var(--sans); letter-spacing: .06em; text-transform: uppercase; color: rgba(31,31,31,.72); }
+  .planes-cab .nota { font-size: 13px; color: var(--gris); }
+  .planes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: stretch; }
+  .plan { background: var(--tarjeta); border-radius: 16px; padding: 20px; border: 1px solid rgba(0,0,0,.04); box-shadow: var(--sombra); display: flex; flex-direction: column; }
+  .plan .tipo { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: rgba(31,31,31,.7); }
+  .plan .fila { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-top: 12px; }
+  .plan .valor { font: 700 26px var(--sans); color: var(--azul); letter-spacing: -.01em; }
+  .plan .valor s { font-size: 15px; font-weight: 500; color: var(--gris); margin-left: 6px; }
+  .plan .detalle { font-size: 14px; color: var(--gris); }
+  .plan h4 { font-family: var(--sans); font-size: 15px; font-weight: 600; margin: 12px 0 10px; }
+  .plan ul { list-style: none; display: grid; gap: 4px; margin-bottom: 14px; }
+  .plan li { position: relative; padding-left: 18px; font-size: 13px; color: var(--texto-2); }
+  .plan li::before { content: ""; position: absolute; left: 1px; top: 5px; width: 8px; height: 4px; border-left: 1.6px solid var(--azul); border-bottom: 1.6px solid var(--azul); transform: rotate(-45deg); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .chip { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; padding: 3px 10px; border-radius: 999px; background: var(--chip); color: var(--texto-2); }
+  .chip svg { width: 12px; height: 12px; }
+  .plan .letra { font-size: 12.5px; color: var(--gris); margin: -6px 0 14px; }
+  .plan .btn { width: 100%; margin-top: auto; padding: 9px 14px; font-size: 13px; }
+
+  /* ---------- cuerpo ---------- */
+  .cuerpo { display: grid; grid-template-columns: 1fr 330px; gap: 32px; margin-top: 48px; align-items: start; }
+  .cuerpo > * { min-width: 0; }
+  .caja { background: var(--tarjeta); border-radius: 16px; box-shadow: var(--sombra); }
+  .tabs { display: flex; gap: 32px; padding: 22px 36px 0; overflow-x: auto; scrollbar-width: none; scroll-margin-top: 16px; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { background: none; border: 0; font: 600 16.5px var(--display); color: rgba(31,31,31,.6); padding: 8px 4px 10px; cursor: pointer; white-space: nowrap; position: relative; }
+  .tab:hover { color: var(--texto); }
+  .tab[aria-selected="true"] { color: var(--texto); }
+  .tab[aria-selected="true"]::after { content: ""; position: absolute; left: 4px; right: 4px; bottom: 0; height: 3px; border-radius: 3px; background: var(--texto); }
+  .panel { padding: 22px 45px 38px; font-size: 17px; color: var(--texto-2); }
+  .panel > * + * { margin-top: 16px; }
+  .panel h2 { font-size: 24px; font-weight: 700; color: var(--texto); line-height: 1.25; }
+  .panel h3 { font-size: 19px; font-weight: 700; color: var(--texto); margin-top: 34px; scroll-margin-top: 16px; }
+  .panel strong { color: var(--texto); }
+  .mono { font-family: var(--mono); font-size: .88em; background: var(--chip); padding: 1px 6px; border-radius: 4px; }
+  .rejilla { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .rejilla.tres { grid-template-columns: repeat(3, 1fr); }
+  .mini { border: 1px solid var(--linea); border-radius: 10px; padding: 14px 16px; background: #fbf9f3; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+  .mini .k { font: 500 13px var(--mono); color: var(--gris); }
+  .mini h4 { font-family: var(--sans); font-size: 15.5px; font-weight: 600; color: var(--texto); margin: 4px 0; }
+  .mini p { font-size: 14.5px; line-height: 1.5; }
+  .mini ul { list-style: none; margin-top: 6px; }
+  .mini li { font-size: 14px; padding: 4px 0 4px 16px; position: relative; border-top: 1px dashed var(--linea); }
+  .mini li::before { content: "›"; position: absolute; left: 2px; color: var(--azul-texto); font-weight: 700; }
+  .lista { list-style: none; display: grid; gap: 6px; }
+  .lista li { position: relative; padding-left: 24px; font-size: 16px; }
+  .lista li::before { content: ""; position: absolute; left: 3px; top: 8px; width: 9px; height: 5px; border-left: 2px solid var(--azul); border-bottom: 2px solid var(--azul); transform: rotate(-45deg); }
+  .lista.no li::before { content: "×"; border: 0; transform: none; top: -1px; left: 4px; color: var(--gris); font-weight: 600; width: auto; height: auto; }
+  ol.pasos { list-style: none; counter-reset: p; display: grid; gap: 4px; }
+  ol.pasos li { counter-increment: p; display: grid; grid-template-columns: 34px 1fr; font-size: 16px; }
+  ol.pasos li::before { content: counter(p, decimal-leading-zero); font: 500 13px var(--mono); color: var(--azul-texto); padding-top: 3px; }
+  .destacado { background: var(--plomo-oscuro); color: #f1ede4; border-radius: 12px; padding: 18px 22px; font-size: 16px; }
+  .destacado b { color: #fff; }
+  .cita { border-left: 3px solid var(--plomo); padding: 4px 0 4px 16px; font-family: var(--display); font-weight: 600; font-size: 19px; color: var(--texto); }
+  .tabla { border-top: 1px solid var(--linea); }
+  .tabla div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--linea); font-size: 15px; }
+  .tabla div span:last-child { font-family: var(--mono); font-size: 14px; white-space: nowrap; }
+  .dolor { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 10px 0; border-top: 1px solid var(--linea); font-size: 15px; }
+  .dolor p:first-child { color: var(--gris); }
+
+  /* temario y preguntas */
+  .acordeon details { border-bottom: 1px solid var(--linea); }
+  .acordeon details:first-child { border-top: 1px solid var(--linea); }
+  .acordeon summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 52px 1fr auto 22px; gap: 12px; align-items: baseline; padding: 15px 2px; }
+  .acordeon summary::-webkit-details-marker { display: none; }
+  .acordeon summary .m { font: 600 13px var(--mono); color: var(--azul-texto); }
+  .acordeon summary .t { font: 600 16.5px var(--display); color: var(--texto); }
+  .acordeon summary .d { font: 13px var(--mono); color: var(--gris); }
+  .acordeon summary .mas { font-size: 18px; color: var(--gris); text-align: right; transition: transform .25s; }
+  .acordeon details[open] summary .mas { transform: rotate(45deg); }
+  .acordeon ul { list-style: none; padding: 0 2px 14px 64px; }
+  .acordeon li { display: flex; justify-content: space-between; gap: 16px; padding: 6px 0; font-size: 15px; border-top: 1px dashed var(--linea); }
+  .acordeon li span { font: 12.5px var(--mono); color: var(--gris); white-space: nowrap; }
+  .acordeon.faq summary { grid-template-columns: 1fr 22px; }
+  .acordeon.faq details p { padding: 0 2px 16px; font-size: 16px; }
+
+  /* lateral */
+  .lateral { display: grid; gap: 16px; }
+  .lateral .rotulo { margin: 0 0 -2px; }
+  .persona { background: linear-gradient(135deg, #5d5b55, #45433f); color: #fff; border-radius: 28px; padding: 20px; display: grid; grid-template-columns: 1fr 104px; gap: 12px; align-items: center; box-shadow: 0 6px 16px rgba(40,38,34,.22); text-decoration: none; }
+  .persona h4 { font-size: 19px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
+  .persona p { font-size: 14.5px; color: rgba(255,255,255,.72); margin-top: 8px; line-height: 1.35; }
+  .avatar { width: 104px; height: 104px; border-radius: 50%; border: 4px solid rgba(255,255,255,.18); background: radial-gradient(circle at 35% 30%, #a3a090, #6e6c62); display: grid; place-items: center; font: 800 34px var(--display); color: #f4f1ea; box-shadow: 0 4px 12px rgba(0,0,0,.25); }
+  .persona.caso { border-radius: 20px; grid-template-columns: 1fr; padding: 18px 20px; background: linear-gradient(135deg, #8a887d, #6d6b62); }
+  .persona.caso .k { font: 500 12px var(--mono); color: rgba(255,255,255,.75); text-transform: uppercase; letter-spacing: .06em; }
+  .persona.caso h4 { margin-top: 4px; font-size: 17px; }
+  .persona.caso p { margin-top: 4px; font-size: 13.5px; }
+  .ayuda { padding: 22px 24px 24px; }
+  .ayuda h3 { display: flex; align-items: center; gap: 8px; font-size: 19px; font-weight: 600; color: var(--azul-texto); }
+  .ayuda p { font-size: 14px; color: var(--gris); margin: 6px 0 16px; }
+  .ayuda .btn { width: 100%; font-size: 13px; padding: 7px 12px; }
+
+  /* lo que construyes (como "cursos relacionados") */
+  .construyes { padding: 22px 24px 24px; margin-top: 32px; }
+  .construyes h3 { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 500; color: rgba(31,31,31,.7); margin-bottom: 18px; }
+  .construyes .rejilla { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .construyes .acciones { margin-top: 16px; }
+  .construyes .btn { font-size: 13px; padding: 7px 13px; }
+
+  /* ---------- pie ---------- */
+  footer { margin-top: 72px; padding: 28px 0 44px; border-top: 1px solid rgba(0,0,0,.08); font-size: 13.5px; color: var(--texto-2); }
+  footer .contenedor { display: flex; justify-content: space-between; gap: 16px 30px; flex-wrap: wrap; }
+
+  /* aviso cuando aún no hay link de pago */
+  .aviso { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; background: var(--plomo-oscuro); color: #fff; padding: 13px 20px; font-size: 15px; border-radius: 10px; transition: opacity .3s, transform .3s; z-index: 200; max-width: calc(100% - 32px); }
+  .aviso.ver { opacity: 1; transform: translate(-50%, 0); }
+
+  /* compra */
+  .compra { margin: auto; border: 0; padding: 0; width: min(460px, calc(100% - 32px)); background: var(--tarjeta); color: var(--texto); border-radius: 16px; box-shadow: 0 30px 80px rgba(0,0,0,.35); }
+  .compra::backdrop { background: rgba(40,38,34,.55); }
+  .compra form { padding: 30px 28px 28px; position: relative; display: grid; gap: 14px; }
+  .compra h3 { font-size: 28px; font-weight: 700; line-height: 1.1; }
+  .compra .tipo { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--azul-texto); }
+  .compra .bajada { color: var(--texto-2); font-size: 15px; }
+  .compra label { display: grid; gap: 6px; font-size: 14px; color: var(--texto-2); }
+  .compra input:not([type=checkbox]) { font: 16px var(--sans); padding: 11px 12px; border: 1px solid #d8d1c1; background: #fff; color: var(--texto); border-radius: 8px; }
+  .compra input:focus { outline: 2px solid var(--azul); outline-offset: 1px; }
+  .compra .check { grid-template-columns: 18px 1fr; gap: 10px; align-items: start; font-size: 13.5px; line-height: 1.45; }
+  .compra .check input { margin-top: 3px; accent-color: var(--azul); }
+  .compra .trampa { position: absolute; left: -9999px; }
+  .compra .msg { min-height: 20px; font-size: 14px; color: #9a3412; }
+  .compra .btn { width: 100%; padding: 12px; font-size: 15px; }
+  .compra .cerrar { position: absolute; top: 10px; right: 14px; background: none; border: 0; font-size: 28px; cursor: pointer; color: var(--gris); }
+
+  /* ---------- portada: grano + terminal ---------- */
+  .portada { position: relative; overflow: hidden; }
+  .portada::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .14; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .portada > * { position: relative; z-index: 1; }
+  .portada .abajo { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
+  .terminal { flex: none; width: 380px; background: rgba(30,29,27,.86); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; box-shadow: 0 18px 40px rgba(0,0,0,.35); backdrop-filter: blur(6px); }
+  .terminal .tb { display: flex; align-items: center; gap: 6px; padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,.07); font: 11.5px var(--mono); color: #8f8b80; }
+  .terminal .tb i { width: 9px; height: 9px; border-radius: 50%; background: #6e6b63; }
+  .terminal .tb span { margin-left: 8px; }
+  .terminal .tx { padding: 12px 16px 14px; font: 12.5px/1.65 var(--mono); color: #e9e5da; }
+  .terminal .tx div { opacity: 0; animation: linea .01s forwards; animation-delay: var(--t); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .terminal .ps { color: #9fc3df; }
+  .terminal .gr { color: #9a968b; }
+  .terminal .ok { color: #b5d0a8; }
+  .terminal .cursor { display: inline-block; width: 7px; height: 14px; background: #e9e5da; vertical-align: -2px; animation: parpadeo 1s steps(1) infinite; }
+  @keyframes linea { to { opacity: 1; } }
+  @keyframes parpadeo { 50% { opacity: 0; } }
+
+  /* ---------- plan destacado + confianza ---------- */
+  .plan { position: relative; transition: transform .25s, box-shadow .25s; }
+  .plan:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 18px 38px rgba(60,50,30,.14); }
+  .plan.destacada { border: 1.5px solid var(--azul); }
+  .plan .sello { position: absolute; top: -11px; right: 18px; background: var(--azul); color: #fff; font: 600 11px var(--sans); letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
+  .confianza { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 32px; margin-top: 22px; font-size: 13.5px; color: var(--texto-2); }
+  .confianza span { display: inline-flex; align-items: center; gap: 8px; }
+  .confianza svg { width: 17px; height: 17px; color: var(--azul-texto); flex: none; }
+
+  /* ---------- vista previa del aula ---------- */
+  .vista { border-radius: 12px; overflow: hidden; border: 1px solid var(--linea); box-shadow: 0 10px 30px rgba(60,50,30,.12); background: #fff; }
+  .vista .tb { display: flex; gap: 6px; align-items: center; padding: 9px 12px; background: var(--chip); font: 11.5px var(--mono); color: var(--gris); }
+  .vista .tb i { width: 9px; height: 9px; border-radius: 50%; background: #cfc8b8; }
+  .vista .tb span { margin: 0 auto; background: var(--tarjeta); padding: 2px 14px; border-radius: 6px; }
+  .vista .in { display: grid; grid-template-columns: 200px 1fr; min-height: 250px; }
+  .vista aside { background: #f3efe5; border-right: 1px solid var(--linea); padding: 14px 0; font-size: 12.5px; }
+  .vista aside .av { padding: 0 14px 10px; font: 11px var(--mono); color: var(--gris); }
+  .vista aside .av b { display: block; height: 4px; margin-top: 6px; border-radius: 4px; background: linear-gradient(90deg, var(--azul) 18%, var(--linea) 18%); }
+  .vista aside p { padding: 6px 14px; display: flex; gap: 8px; align-items: center; color: var(--texto-2); line-height: 1.3; }
+  .vista aside p::before { content: ""; width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid #c9c2b2; flex: none; }
+  .vista aside p.hecha::before { background: var(--azul); border-color: var(--azul); }
+  .vista aside p.actual { background: var(--tarjeta); box-shadow: inset 3px 0 0 var(--azul); color: var(--texto); font-weight: 500; }
+  .vista .centro { padding: 16px 18px; }
+  .vista .centro .k { font: 11px var(--mono); color: var(--azul-texto); }
+  .vista .centro h4 { font: 700 16px var(--display); color: var(--texto); margin: 2px 0 10px; }
+  .vista .video { aspect-ratio: 16 / 9; border-radius: 8px; background: linear-gradient(135deg, #3b3833, #5d5b55); display: grid; place-items: center; position: relative; }
+  .vista .video::before { content: ""; width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 7v10l8-5z' fill='%231e5b8c'/%3E%3C/svg%3E") center/22px no-repeat; box-shadow: 0 4px 14px rgba(0,0,0,.3); }
+  .vista .video::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 10px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #9fc3df 35%, rgba(255,255,255,.25) 35%); }
+  .vista-nota { font-size: 14px; color: var(--gris); }
+
+  /* ---------- barra de compra en celular ---------- */
+  .cta-movil { display: none; }
+
+  /* ---------- entrada al cargar ---------- */
+  .entra { animation: entra .7s cubic-bezier(.2,.7,.2,1) both; animation-delay: var(--d, 0s); }
+  @keyframes entra { from { opacity: 0; transform: translateY(14px); } }
+  @media (prefers-reduced-motion: reduce) {
+    .entra, .terminal .tx div { animation: none; opacity: 1; }
+    .terminal .cursor { animation: none; }
+    .plan:hover { transform: none; }
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1080px) {
+    .planes { grid-template-columns: 1fr 1fr; }
+    .cuerpo { grid-template-columns: 1fr; }
+    .lateral { grid-template-columns: 1fr 1fr; }
+    .lateral .rotulo { grid-column: 1 / -1; }
+    .barra nav.centro { display: none; }
+    .terminal { display: none; }
+    .barra .contenedor { grid-template-columns: 1fr auto; padding: 14px 24px; }
+  }
+  @media (max-width: 720px) {
+    .contenedor { padding: 0 16px; }
+    .barra .contenedor { padding: 12px 16px; }
+    .marca { font-size: 18px; }
+    .marca small { display: none; }
+    .marca .logo { width: 30px; height: 30px; font-size: 13px; }
+    .barra .der { gap: 14px; }
+    .barra .btn { padding: 9px 12px; font-size: 13px; }
+    .portada { padding: 22px 18px; min-height: 240px; gap: 48px; margin-top: 8px; }
+    .planes, .lateral, .rejilla, .rejilla.tres { grid-template-columns: 1fr; }
+    .planes-cab .nota { display: none; }
+    .cuerpo { margin-top: 36px; }
+    .tabs { padding: 16px 18px 0; gap: 18px; }
+    .tab { font-size: 15px; }
+    .panel { padding: 18px 20px 28px; font-size: 16px; }
+    .panel h2 { font-size: 21px; }
+    .dolor { grid-template-columns: 1fr; gap: 4px; }
+    .acordeon summary { grid-template-columns: 40px 1fr 20px; }
+    .acordeon summary .d { display: none; }
+    .acordeon ul { padding-left: 2px; }
+    .persona { grid-template-columns: 1fr 84px; }
+    .avatar { width: 84px; height: 84px; font-size: 28px; }
+    .construyes { padding: 20px 18px; }
+    .confianza { justify-content: flex-start; flex-direction: column; gap: 8px; }
+    .vista .in { grid-template-columns: 1fr; }
+    .vista aside { display: none; }
+    body { padding-bottom: 76px; }
+    .cta-movil { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 100; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: rgba(249,246,238,.96); backdrop-filter: blur(8px); border-top: 1px solid var(--linea);
+      box-shadow: 0 -6px 20px rgba(60,50,30,.1); transform: translateY(110%); transition: transform .3s; }
+    .cta-movil.ver { transform: none; }
+    .cta-movil b { display: block; font: 700 18px var(--sans); color: var(--azul); }
+    .cta-movil small { font-size: 12px; color: var(--gris); }
+    .cta-movil .btn { padding: 10px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="barra">
+  <div class="contenedor">
+    <a href="#" class="marca"><span class="logo" aria-hidden="true">CC</span><span>Claude Code<small>Curso 2026 · Felipe Campos</small></span></a>
+    <nav class="centro" aria-label="Secciones">
+      <a href="#" class="activo">Inicio</a>
+      <a href="#precio">Precio</a>
+      <a href="#temario">Temario</a>
+      <a href="#instructor">Instructores</a>
+      <a href="#faq">Preguntas</a>
+    </nav>
+    <div class="der">
+      <a href="entrar.html" class="entrar">Entrar</a>
+      <a href="#precio" class="btn">Reservar cupo</a>
+    </div>
+  </div>
+</header>
+
+<main class="contenedor">
+
+  <!-- PORTADA -->
+  <div class="portada entra">
+    <a href="#temario" class="volver"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Ver el temario</a>
+    <div class="abajo">
+      <div>
+        <h1>Introducción a Claude Code 2026</h1>
+        <div class="insignias">
+          <span class="insignia codigo">CC2026</span>
+          <span class="insignia azul">Preventa</span>
+          <span class="insignia">Desde cero</span>
+          <span class="insignia">Español</span>
+        </div>
+      </div>
+      <div class="terminal" aria-hidden="true">
+        <div class="tb"><i></i><i></i><i></i><span>~/mi-negocio</span></div>
+        <div class="tx">
+          <div style="--t:.5s"><span class="ps">$</span> claude</div>
+          <div style="--t:1.2s"><span class="ps">›</span> Crea la página de mi negocio con formulario de contacto</div>
+          <div style="--t:2s" class="gr">● Leyendo el proyecto…</div>
+          <div style="--t:2.6s" class="gr">● Plan: página + estilos + formulario</div>
+          <div style="--t:3.3s" class="ok">✓ Página lista para publicar</div>
+          <div style="--t:3.8s"><span class="ps">›</span> <span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLANES -->
+  <section id="precio" aria-labelledby="planes-titulo">
+    <div class="planes-cab entra" style="--d:.1s">
+      <h2 class="rotulo" id="planes-titulo">Planes disponibles</h2>
+      <span class="nota">Pago único · sin suscripción</span>
+    </div>
+    <div class="planes">
+      <article class="plan destacada entra" style="--d:.15s">
+        <span class="sello">Recomendado</span>
+        <div class="tipo">Preventa</div>
+        <div class="fila"><span class="valor">USD 35<s>USD 50</s></span><span class="detalle">Precio fundador</span></div>
+        <h4>Plan Fundador</h4>
+        <ul>
+          <li>11 módulos y 43 lecciones en video, en tu aula online</li>
+          <li>Material en PDF, plantillas y el proyecto completo</li>
+          <li>Acceso por 1 año desde el lanzamiento</li>
+        </ul>
+        <div class="chips">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3"/></svg>Videos grabados</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>1 año de acceso</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>A tu ritmo</span>
+        </div>
+        <p class="letra">Pago único. Sin suscripción. Acceso por 1 año desde el lanzamiento.</p>
+        <a href="#" class="btn js-pago">Elegir este plan</a>
+      </article>
+
+      <article class="plan entra" style="--d:.22s">
+        <div class="tipo">Lanzamiento</div>
+        <div class="fila"><span class="valor">USD 50</span><span class="detalle">Precio normal</span></div>
+        <h4>Plan Regular</h4>
+        <ul>
+          <li>El mismo curso completo</li>
+          <li>Disponible cuando termine la preventa</li>
+          <li>Acceso por 1 año desde la compra</li>
+        </ul>
+        <div class="chips">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3"/></svg>Videos grabados</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>1 año de acceso</span>
+        </div>
+        <span class="btn" aria-disabled="true">Disponible al lanzamiento</span>
+      </article>
+
+      <article class="plan entra" style="--d:.29s">
+        <div class="tipo">Ficha del curso</div>
+        <div class="fila"><span class="valor">~4 h 45 min</span><span class="detalle">11 módulos</span></div>
+        <h4>43 lecciones de 5 a 15 minutos</h4>
+        <ul>
+          <li>Nivel: desde cero, sin saber programar</li>
+          <li>Mac o Windows</li>
+          <li>Resultado: un sistema publicado y tu trabajo más simple</li>
+        </ul>
+        <div class="chips">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2Z"/><path d="M8 7h6"/></svg>Tarea en cada lección</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Online</span>
+        </div>
+        <a href="#temario" class="btn btn-plomo">Ver contenidos del curso</a>
+      </article>
+    </div>
+    <div class="confianza entra" style="--d:.35s">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>Pago seguro con MercadoPago</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Devolución del 100% si no se publica en la fecha informada</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Aula propia con usuario y contraseña</span>
+    </div>
+  </section>
+
+  <!-- CUERPO -->
+  <div class="cuerpo entra" style="--d:.4s">
+    <div>
+      <div class="caja">
+        <div class="tabs" role="tablist" aria-label="Información del curso">
+          <button class="tab" role="tab" id="tab-descripcion" aria-controls="descripcion" aria-selected="true">Descripción del curso</button>
+          <button class="tab" role="tab" id="tab-temario" aria-controls="temario" aria-selected="false" tabindex="-1">Contenidos del curso</button>
+          <button class="tab" role="tab" id="tab-quien" aria-controls="quien" aria-selected="false" tabindex="-1">Para quién es</button>
+          <button class="tab" role="tab" id="tab-faq" aria-controls="faq" aria-selected="false" tabindex="-1">Preguntas frecuentes</button>
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <div class="panel" role="tabpanel" id="descripcion" aria-labelledby="tab-descripcion">
+          <h2>La habilidad que está cambiando el trabajo.</h2>
+          <p>Los negocios se están digitalizando con inteligencia artificial y necesitan a alguien que sepa hacerlo. En este curso aprendes a construir sistemas, simplificar tu trabajo, crear contenido y automatizar tu negocio con Claude Code, <strong>sin saber programar</strong>.</p>
+          <p>Antes, tener un sistema propio significaba estudiar programación por años o pagar meses de desarrollo. Hoy una sola persona con Claude Code lo hace. Es la puerta de entrada a muchas más oportunidades: en tu trabajo, como freelance, con tu propia agencia o en tu propio negocio.</p>
+
+          <h3>Por qué ahora</h3>
+          <div class="rejilla">
+            <div class="mini"><div class="k">01</div><h4>Te abre puertas</h4><p>Todos los negocios se están digitalizando con IA y buscan a alguien que sepa hacerlo.</p></div>
+            <div class="mini"><div class="k">02</div><h4>Te multiplica</h4><p>Con agentes, una persona hace el trabajo de varias: uno construye, otro revisa la seguridad, otro prepara el informe.</p></div>
+            <div class="mini"><div class="k">03</div><h4>Automatiza por ti</h4><p>Recordatorios de pago, atención por WhatsApp, informes cada lunes. Programas que trabajan solos.</p></div>
+            <div class="mini"><div class="k">04</div><h4>Una nueva forma de trabajar</h4><p>Le das una meta a la IA y avanza sola con <span class="mono">/loop</span>. Dejas tareas en la nube con <span class="mono">/schedule</span>.</p></div>
+            <div class="mini"><div class="k">05</div><h4>Aprendes más rápido</h4><p>Un profesor disponible las 24 horas que te explica lo que hace, sobre tu propio proyecto.</p></div>
+            <div class="mini"><div class="k">06</div><h4>Dejas de depender</h4><p>Cuando tienes una idea, la construyes. Sin esperar a un programador.</p></div>
+          </div>
+          <p>La IA avanza todas las semanas. Un curso de 40 horas queda viejo antes de terminarlo. <strong>Este es corto a propósito:</strong> entras rápido, construyes de inmediato y aprendes a fondo lo que no cambia.</p>
+
+          <h3>Más que software: tres planos</h3>
+          <p>Claude Code no sirve solo para programar. Es una forma de trabajar que simplifica tu trabajo, potencia tu negocio y te da entrada al mundo empresarial.</p>
+          <div class="rejilla tres">
+            <div class="mini"><div class="k">Plano 01</div><h4>Crear sistemas</h4><ul><li>Página web con tu dominio</li><li>App con login y base de datos</li><li>WhatsApp, correos, pagos e IA</li><li>Tus propios agentes</li></ul></div>
+            <div class="mini"><div class="k">Plano 02</div><h4>Tu vida laboral</h4><ul><li>Informes y planillas en minutos</li><li>Documentos y correos en borrador</li><li>Tu forma de trabajar en skills</li><li>Aprender cualquier tema más rápido</li></ul></div>
+            <div class="mini"><div class="k">Plano 03</div><h4>Tu vida empresarial</h4><ul><li>Contenido con tu propia voz</li><li>Mapa de procesos a automatizar</li><li>Cobranza y seguimiento automáticos</li><li>Entrada al mundo empresarial</li></ul></div>
+          </div>
+          <p class="destacado"><b>Seguridad y Ley 21.719.</b> El curso te enseña a construir y automatizar con seguridad: login, datos protegidos y lo esencial de la nueva ley de protección de datos personales de Chile.</p>
+
+          <h3>El método</h3>
+          <p>Todos usan la IA. Muy pocos saben dirigirla. Le pides algo y te devuelve algo genérico; pierdes más tiempo corrigiendo que haciéndolo tú. El problema no es la IA: <strong>lo que falta es dirección.</strong> Aquí sigues un solo camino, y cada paso termina en algo que funciona:</p>
+          <ol class="pasos">
+            <li>Entender las 5 piezas de cualquier software</li>
+            <li>Instalar Claude Code y crear tu primera página</li>
+            <li>Aprender a pedir: plan, contexto y memoria</li>
+            <li>Publicar tu página en internet</li>
+            <li>App con login y base de datos en la nube</li>
+            <li>Correo, WhatsApp, pagos e IA en tu app</li>
+            <li>Tus propios agentes y procesos automáticos con /loop y /schedule</li>
+          </ol>
+          <div>
+            <div class="dolor"><p>"La IA me entrega cosas genéricas."</p><p>Aprendes a dirigirla: contexto, objetivo, límites y revisión.</p></div>
+            <div class="dolor"><p>Horas en planillas, informes y correos repetitivos.</p><p>Se hacen en minutos y quedan guardadas como skills.</p></div>
+            <div class="dolor"><p>No hay tiempo para hacer contenido.</p><p>Una semana de contenido con tu voz en una tarde, revisado por ti.</p></div>
+            <div class="dolor"><p>Se olvidan cobros y seguimientos.</p><p>Recordatorios automáticos que corren solos, todos los días.</p></div>
+            <div class="dolor"><p>Un sistema propio cuesta meses y un programador.</p><p>Lo construyes tú, por partes, con Claude Code.</p></div>
+          </div>
+          <p class="cita">La IA ya sabe hacer casi todo. Lo que falta es quien sepa dirigirla.</p>
+
+          <h3>Qué incluye</h3>
+          <ul class="lista">
+            <li>11 módulos y 43 lecciones en video, en tu aula online con usuario propio</li>
+            <li>Acceso por 1 año: el año parte el día del lanzamiento, no el día que pagas</li>
+            <li>Módulo de IA para tu trabajo y tu empresa: productividad, contenido, procesos y Ley 21.719</li>
+            <li>Material de estudio en PDF: glosario, plantillas y checklists</li>
+            <li>Plantilla de CLAUDE.md y pedidos listos para copiar</li>
+            <li>El proyecto completo del curso, paso a paso</li>
+            <li>Caso real explicado por dentro: seguridad y costos</li>
+            <li>Tu ruta de 30 días para el primer proyecto propio</li>
+          </ul>
+
+          <h3>Así se ve tu aula</h3>
+          <div class="vista" aria-hidden="true">
+            <div class="tb"><i></i><i></i><i></i><span>aula del curso</span></div>
+            <div class="in">
+              <aside>
+                <div class="av">Tu avance<b></b></div>
+                <p class="hecha">1.1 Qué es el vibe coding</p>
+                <p class="hecha">1.2 Qué es Claude Code</p>
+                <p class="actual">1.3 Las 5 piezas de cualquier software</p>
+                <p>1.4 La terminal sin miedo</p>
+                <p>2.1 Qué cuenta necesitas</p>
+              </aside>
+              <div class="centro">
+                <div class="k">M1 · Fundamentos sin tecnicismos</div>
+                <h4>Las 5 piezas de cualquier software</h4>
+                <div class="video"></div>
+              </div>
+            </div>
+          </div>
+          <p class="vista-nota">Temario con tu avance, video con velocidad 1x a 2x, la tarea de cada lección y el PDF del curso. Sigues donde lo dejaste, en el computador o en el celular.</p>
+
+          <h3>Por qué un precio bajo</h3>
+          <p>Porque la barrera de entrada a la habilidad más valiosa de esta década no debería ser el precio, sino las ganas de construir. Lo que vas a pagar en herramientas para empezar es poco: la mayoría tiene un plan gratuito, y lo explico en cada módulo.</p>
+          <div class="tabla">
+            <div><span>Desarrollar un sistema a la medida con un tercero</span><span>meses</span></div>
+            <div><span>Horas perdidas viendo tutoriales sueltos</span><span>incontables</span></div>
+            <div><span>Un camino ordenado de principio a fin</span><span>~4 h 45 min</span></div>
+            <div><span>Tu inversión como fundador</span><span>USD 35</span></div>
+          </div>
+
+          <h3 id="sobre-instructor">Sobre el instructor</h3>
+          <p>Hace poco más de un año yo no sabía programar. Hoy tengo sistemas funcionando para negocios reales, construidos con Claude Code.</p>
+          <p>Soy emprendedor chileno. Fundé una corredora de propiedades y una agencia de automatización con IA. No aprendí a programar de la forma tradicional: aprendí a dirigir a una IA que programa, con método, con orden y verificando cada cosa en producción. Este curso es el camino que me hubiera gustado tener al empezar: sin ruido, sin humo y con lo que de verdad se usa.</p>
+        </div>
+
+        <!-- CONTENIDOS -->
+        <div class="panel" role="tabpanel" id="temario" aria-labelledby="tab-temario" hidden>
+          <p>11 módulos. 43 lecciones. Cero relleno. Cada video tiene un solo objetivo y termina con una tarea práctica de 10 a 20 minutos.</p>
+          <div class="acordeon" id="lista-temario"></div>
+        </div>
+
+        <!-- PARA QUIÉN -->
+        <div class="panel" role="tabpanel" id="quien" aria-labelledby="tab-quien" hidden>
+          <h2>Honestidad antes de que compres.</h2>
+          <h3>Es para ti si…</h3>
+          <ul class="lista">
+            <li>Nunca programaste y quieres entender las bases de verdad.</li>
+            <li>Tienes un negocio o una idea y quieres construir tu propia herramienta.</li>
+            <li>Te saturaste con comunidades llenas de información y quieres un camino claro.</li>
+            <li>Quieres ofrecer servicios de automatización e IA a otros negocios, o sumar una habilidad de alto valor a tu trabajo.</li>
+            <li>Sientes que el mundo está cambiando y no quieres quedarte mirando desde afuera.</li>
+            <li>Trabajas para alguien y quieres simplificar tu día: menos planillas a mano, menos tareas repetitivas.</li>
+            <li>Emprendes o creas contenido y quieres que la IA trabaje para tu negocio.</li>
+            <li>Prefieres construir a mirar tutoriales.</li>
+          </ul>
+          <h3>No es para ti si…</h3>
+          <ul class="lista no">
+            <li>Ya eres desarrollador y buscas contenido avanzado de arquitectura.</li>
+            <li>Buscas hacerte rico en una semana sin practicar.</li>
+            <li>No vas a hacer las tareas prácticas: ahí está el aprendizaje.</li>
+            <li>Quieres probar todas las herramientas del mercado a la vez.</li>
+          </ul>
+        </div>
+
+        <!-- PREGUNTAS -->
+        <div class="panel" role="tabpanel" id="faq" aria-labelledby="tab-faq" hidden>
+          <div class="acordeon faq">
+            <details><summary><span class="t">¿Necesito saber programar?</span><span class="mas">+</span></summary><p>No. El curso parte desde cero: qué es una terminal, qué es un archivo y cómo se arma un software. Lo único que necesitas es un computador (Mac o Windows) y ganas de practicar.</p></details>
+            <details><summary><span class="t">¿Qué necesito pagar aparte?</span><span class="mas">+</span></summary><p>Una suscripción de Claude que incluya Claude Code. Te explico en el módulo 2 qué plan conviene para partir. GitHub, Supabase y Resend tienen planes gratuitos para aprender. Para publicar tu app en Railway hay un costo bajo según el uso.</p></details>
+            <details><summary><span class="t">¿Cuándo recibo el curso?</span><span class="mas">+</span></summary><p>Al comprar en preventa reservas tu cupo con precio fundador. Al pagar te llega un correo para crear tu contraseña del aula; las lecciones se van habilitando ahí y te avisamos cuando el curso esté completo. La fecha de lanzamiento se informa al momento de la compra, y tu año de acceso parte ese día.</p></details>
+            <details><summary><span class="t">¿Por cuánto tiempo tengo acceso?</span><span class="mas">+</span></summary><p>Un año completo en el aula online, contado desde el lanzamiento del curso o desde tu compra, lo que ocurra después. Durante ese año puedes ver las lecciones cuantas veces quieras, a tu ritmo, y descargar el PDF. La cuenta es personal y funciona en un dispositivo a la vez. Al terminar el año puedes renovar si quieres seguir viéndolo.</p></details>
+            <details><summary><span class="t">¿Y si no se publica o no me sirve?</span><span class="mas">+</span></summary><p>Si el curso no se publica en la fecha informada, te devolvemos el 100% de lo pagado. Las condiciones de devolución y retracto están en los <a href="terminos.html">términos y condiciones</a>.</p></details>
+            <details><summary><span class="t">¿Me sirve si no quiero crear software?</span><span class="mas">+</span></summary><p>Sí. El módulo 8 está dedicado a usar Claude Code en tu trabajo y tu empresa: informes, planillas y documentos, contenido para redes, automatización de procesos y cuidado de datos personales. Crear sistemas es uno de los tres planos, no el único.</p></details>
+            <details><summary><span class="t">La IA cambia cada semana. ¿No va a quedar obsoleto?</span><span class="mas">+</span></summary><p>Por eso es corto. El curso enseña a fondo lo que no cambia: cómo pedirle bien a la IA, planificar, revisar, proteger tus datos y publicar. Y te enseña a incorporar lo nuevo tú mismo, preguntándole a Claude Code qué cambió y cómo usarlo en tu proyecto. Cuando cambie algo importante en las herramientas, se actualizan las lecciones afectadas.</p></details>
+            <details><summary><span class="t">¿Cuánto tiempo me toma terminarlo?</span><span class="mas">+</span></summary><p>Son cerca de 4 horas y 45 minutos de video. Con las tareas prácticas, la mayoría lo termina entre 2 y 4 semanas dedicándole un rato al día.</p></details>
+            <details><summary><span class="t">¿Sirve si uso Windows?</span><span class="mas">+</span></summary><p>Sí. Cuando hay diferencias entre Mac y Windows (por ejemplo, en la instalación), se muestran las dos.</p></details>
+            <details><summary><span class="t">¿Es un curso oficial de Anthropic?</span><span class="mas">+</span></summary><p>No. Es un curso independiente, creado por Felipe Campos a partir de su experiencia construyendo sistemas reales con Claude Code.</p></details>
+          </div>
+        </div>
+      </div>
+
+      <!-- LO QUE CONSTRUYES -->
+      <div class="caja construyes">
+        <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M7 7V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/></svg>Lo que construyes en el curso</h3>
+        <div class="rejilla">
+          <div class="mini"><div class="k">01 · FRONTEND</div><h4>La vitrina: página publicada con tu dominio</h4></div>
+          <div class="mini"><div class="k">02 · BACKEND</div><h4>La cocina: servidor que protege tus claves</h4></div>
+          <div class="mini"><div class="k">03 · DATOS</div><h4>La bodega: base de datos con login</h4></div>
+          <div class="mini"><div class="k">04 · INTEGRACIONES</div><h4>Correos, WhatsApp, pagos e IA</h4></div>
+          <div class="mini"><div class="k">05 · AGENTES</div><h4>Tu equipo: skills y automatizaciones</h4></div>
+        </div>
+        <div class="acciones"><a href="#temario" class="btn btn-plomo">Ver todos los contenidos</a></div>
+      </div>
+    </div>
+
+    <!-- LATERAL -->
+    <aside class="lateral" id="instructor">
+      <h2 class="rotulo">Instructores</h2>
+      <a class="persona" href="#sobre-instructor">
+        <div><h4>Felipe Campos</h4><p>Emprendedor chileno · construye sistemas reales con Claude Code</p></div>
+        <div class="avatar" aria-hidden="true">FC</div>
+      </a>
+      <div class="persona">
+        <div><h4>Alonso Zelek</h4><p>Programador</p></div>
+        <div class="avatar" aria-hidden="true">AZ</div>
+      </div>
+      <div class="persona caso">
+        <div class="k">Caso real · Inmobiliaria</div>
+        <h4>Nova</h4>
+        <p>Asistente de IA que atiende por WhatsApp, califica clientes y agenda visitas, con su propio CRM.</p>
+      </div>
+      <div class="persona caso">
+        <div class="k">Caso real · Gimnasio</div>
+        <h4>Software de gestión</h4>
+        <p>Socios, cobros, caja, check-in con QR, app para socios y recordatorios por WhatsApp.</p>
+      </div>
+      <div class="caja ayuda">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>¿Necesitas ayuda?</h3>
+        <p>Escríbenos y te ayudamos con este curso.</p>
+        <a href="#faq" class="btn btn-borde" id="btn-ayuda">Ver preguntas frecuentes</a>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <span>© 2026 Felipe Campos · Introducción a Claude Code</span>
+    <span class="legal"><a href="terminos.html">Términos y condiciones</a> · <a href="privacidad.html">Política de privacidad</a></span>
+    <span>Curso independiente, sin afiliación con Anthropic. Claude y Claude Code son marcas de Anthropic, PBC.</span>
+  </div>
+</footer>
+
+<div class="cta-movil" id="cta-movil">
+  <div><b>USD 35</b><small>Precio fundador · pago único</small></div>
+  <a href="#" class="btn js-pago">Elegir este plan</a>
+</div>
+
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+<!-- Compra: datos del alumno antes de ir a MercadoPago -->
+<dialog class="compra" id="compra" aria-labelledby="compra-titulo">
+  <form id="f-compra" novalidate>
+    <button type="button" class="cerrar" id="compra-cerrar" aria-label="Cerrar">×</button>
+    <p class="tipo">Precio fundador · USD 35</p>
+    <h3 id="compra-titulo">Reserva tu cupo</h3>
+    <p class="bajada">Con este correo crearás tu usuario del aula. El pago se hace en MercadoPago.</p>
+    <label>Nombre<input id="c-nombre" autocomplete="name" required maxlength="80"></label>
+    <label>Correo<input id="c-email" type="email" autocomplete="email" required maxlength="120"></label>
+    <label class="trampa" aria-hidden="true">Sitio web<input id="c-sitio" tabindex="-1" autocomplete="off"></label>
+    <label class="check"><input type="checkbox" id="c-terminos" required> <span>Acepto los <a href="terminos.html" target="_blank">términos y condiciones</a> y la <a href="privacidad.html" target="_blank">política de privacidad</a>. Entiendo que el acceso es personal y dura 1 año desde el lanzamiento (o desde mi compra, si es posterior).</span></label>
+    <label class="check"><input type="checkbox" id="c-marketing"> <span>Quiero recibir novedades del curso por correo (opcional).</span></label>
+    <p class="msg" id="c-msg" role="alert"></p>
+    <button class="btn" type="submit">Ir a pagar →</button>
+  </form>
+</dialog>
+
+<script src="js/config.js"></script>
+<script src="js/temario.js"></script>
+<script>
+  // ===== CONFIGURACIÓN (Felipe: pega aquí tu link de pago cuando lo tengas) =====
+  const LINK_PAGO = "";   // ej: link de MercadoPago. Se usa solo en modo demo.
+  const WHATSAPP  = "";   // ej: "569XXXXXXXX" (sin + ni espacios). Se usa si no hay LINK_PAGO.
+
+  const CURSO = window.CURSO || {};
+  const $ = (id) => document.getElementById(id);
+
+  // Temario: viene de js/temario.js (el mismo que usa el aula)
+  $("lista-temario").innerHTML = window.TEMARIO.map(([m, t, d, lecciones], i) => `
+    <details${i === 0 ? " open" : ""}>
+      <summary><span class="m">${m}</span><span class="t">${t}</span><span class="d">${d}</span><span class="mas">+</span></summary>
+      <ul>${lecciones.map(([n, min], j) => `<li>${m.slice(1)}.${j + 1} — ${n}<span>${min} min</span></li>`).join("")}</ul>
+    </details>`).join("");
+
+  // Pestañas
+  const tabs = [...document.querySelectorAll(".tab")];
+  function abrirPestana(id, foco) {
+    tabs.forEach((t) => {
+      const activa = t.getAttribute("aria-controls") === id;
+      t.setAttribute("aria-selected", activa);
+      t.tabIndex = activa ? 0 : -1;
+      $(t.getAttribute("aria-controls")).hidden = !activa;
+      if (activa && foco) t.focus();
+    });
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => abrirPestana(t.getAttribute("aria-controls")));
+    t.addEventListener("keydown", (e) => {
+      const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (d) abrirPestana(tabs[(i + d + tabs.length) % tabs.length].getAttribute("aria-controls"), true);
+    });
+  });
+
+  // Los links a #temario, #quien, #faq o #sobre-instructor abren su pestaña
+  const PESTANAS = { temario: "temario", quien: "quien", faq: "faq", descripcion: "descripcion", "sobre-instructor": "descripcion" };
+  function seguirAncla(hash, e) {
+    const id = hash.slice(1);
+    if (!PESTANAS[id]) return;
+    if (e) e.preventDefault();
+    abrirPestana(PESTANAS[id]);
+    const destino = id === "sobre-instructor" ? $(id) : document.querySelector(".tabs");
+    destino.scrollIntoView({ behavior: "smooth", block: "start" });
+    history.replaceState(null, "", hash);
+  }
+  document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => seguirAncla(a.getAttribute("href"), e)));
+  if (location.hash) seguirAncla(location.hash);
+
+  // Botón de ayuda: correo de soporte o WhatsApp si están configurados (si no, abre las preguntas)
+  const ayuda = $("btn-ayuda");
+  const ayudaHref = CURSO.CONTACTO ? `mailto:${CURSO.CONTACTO}` : WHATSAPP ? `https://wa.me/${WHATSAPP}` : "";
+  if (ayudaHref) {
+    const nuevo = ayuda.cloneNode(false); // sin el listener que abre la pestaña de preguntas
+    nuevo.href = ayudaHref;
+    nuevo.textContent = CURSO.CONTACTO ? "Escribir al soporte" : "Contactar por WhatsApp";
+    if (!CURSO.CONTACTO) { nuevo.target = "_blank"; nuevo.rel = "noopener"; }
+    ayuda.replaceWith(nuevo);
+  }
+
+  // Botones de pago: plataforma propia (modal → MercadoPago) → link de pago → WhatsApp → aviso
+  const aviso = $("aviso");
+  const modal = $("compra");
+  document.querySelectorAll(".js-pago").forEach((b) => {
+    if (!CURSO.DEMO) {
+      b.addEventListener("click", (e) => { e.preventDefault(); modal.showModal(); $("c-nombre").focus(); });
+      return;
+    }
+    if (LINK_PAGO) { b.href = LINK_PAGO; b.target = "_blank"; b.rel = "noopener"; return; }
+    if (WHATSAPP) {
+      b.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola Felipe, quiero reservar mi cupo fundador del curso Introducción a Claude Code 2026")}`;
+      b.target = "_blank"; b.rel = "noopener"; return;
+    }
+    b.addEventListener("click", (e) => {
+      e.preventDefault();
+      aviso.textContent = "La preventa abre en los próximos días. Vuelve pronto.";
+      aviso.classList.add("ver");
+      setTimeout(() => aviso.classList.remove("ver"), 3200);
+    });
+  });
+  // Barra de compra en celular: aparece cuando ya pasaste los planes
+  const cta = $("cta-movil"), planes = $("precio");
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(([e]) => cta.classList.toggle("ver", !e.isIntersecting && e.boundingClientRect.top < 0)).observe(planes);
+  }
+
+  $("compra-cerrar").addEventListener("click", () => modal.close());
+  modal.addEventListener("click", (e) => { if (e.target === modal) modal.close(); });
+
+  $("f-compra").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = (t) => ($("c-msg").textContent = t);
+    const nombre = $("c-nombre").value.trim(), email = $("c-email").value.trim().toLowerCase();
+    if (nombre.length < 2) return msg("Escribe tu nombre.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return msg("Revisa tu correo: ahí te llega el acceso.");
+    if (!$("c-terminos").checked) return msg("Debes aceptar los términos para continuar.");
+    const btn = e.submitter; btn.disabled = true; msg("Preparando tu pago…");
+    try {
+      const r = await fetch(`${CURSO.SUPABASE_URL}/functions/v1/crear-pago`, {
+        method: "POST",
+        headers: { "content-type": "application/json", apikey: CURSO.SUPABASE_ANON_KEY, authorization: `Bearer ${CURSO.SUPABASE_ANON_KEY}` },
+        body: JSON.stringify({ nombre, email, acepta_terminos: true, acepta_marketing: $("c-marketing").checked, sitio_web: $("c-sitio").value }),
+      });
+      const d = await r.json();
+      if (!r.ok || !d.url) throw new Error(d.error || "sin_url");
+      location.href = d.url;
+    } catch (err) {
+      console.error(err);
+      btn.disabled = false;
+      msg("No pudimos abrir el pago. Intenta de nuevo en un minuto.");
+    }
+  });
+</script>
+</body>
+</html>
